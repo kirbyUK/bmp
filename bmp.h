@@ -20,11 +20,25 @@ struct BMP
 
 	// BITMAPINFOHEADER:
 	// The image dimensions:
-	int32_t width;
-	int32_t height;
+	int32_t width, height;
 
 	// The number of bits per pixel:
 	uint32_t bits_per_pixel;
+
+	// The compression used, if any:
+	uint32_t compression;
+
+	// The size, in bytes, of the image:
+	uint32_t img_size;
+
+	// The pixels-per-metre horizontally and vertically:
+	uint32_t x_pixels_per_metre, y_pixels_per_metre;
+
+	// The number of colour indexes in the colour table:
+	uint32_t num_colours;
+
+	// The number of important colours used:
+	uint32_t important_colours;
 
 	// RGBQUAD array:
 	uint16_t** data;

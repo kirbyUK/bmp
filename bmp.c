@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <math.h>
 
 struct BMP* open_bmp(const char* filename)
 {
@@ -40,14 +39,28 @@ struct BMP* open_bmp(const char* filename)
 	fread(&b->width, 4, 1, f);
 	fread(&b->height, 4, 1, f);
 
-	// With this, we can allocate the memory for the array of actual pixel data:
-	b->data = malloc(sizeof(uint32_t*) * b->height);
-	for(int i = 0; i < b->height; i++)
-		b->data[i] = malloc(sizeof(uint32_t) * b->width);
-
 	// Skip the number of planes (always 1):
 	fseek(f, 2, SEEK_CUR);
 	fread(&b->bits_per_pixel, 2, 1, f);
+
+	// Read the compression used:
+	fread(&b->compression, 4, 1, f);
+
+	// Read the image size:
+	fread(&b->img_size, 4, 1, f);
+
+	// Read the pixels-per-metre in both x and y:
+	fread(&b->x_pixels_per_metre, 4, 1, f);
+	fread(&b->y_pixels_per_metre, 4, 1, f);
+
+	// Read the number of colours and important colours:
+	fread(&b->num_colours, 4, 1, f);
+	fread(&b->important_colours, 4, 1, f);
+
+	// Allocate the memory for the array of actual pixel data:
+	b->data = malloc(sizeof(uint32_t*) * b->height);
+	for(int i = 0; i < b->height; i++)
+		b->data[i] = malloc(sizeof(uint32_t) * b->width);
 
 	// Read the actual pixel data: 
 	fseek(f, b->offset, SEEK_SET);
@@ -64,27 +77,4 @@ void free_bmp(struct BMP* b)
 		free(b->data[i]);
 	free(b->data);
 	free(b);
-}
-
-int main()
-{
-	struct BMP* b = open_bmp("test.bmp");
-	if(b != NULL)
-	{
-		printf("Size: %d bytes\n", b->size);
-		printf("Dimensions: %dpx x %dpx\n", b->width, b->height);
-		printf("Bits per pixel: %d\n", b->bits_per_pixel);
-
-		printf("\nData:\n");
-		for(int i = 0; i < b->height; i++)
-		{
-			printf("%d:\t", i);
-			for(int j = 0; j < b->width; j++)
-				printf("%x, ", b->data[i][j]);
-			printf("\n");
-		}
-		free_bmp(b);
-		return 0;
-	}
-	return 1;
 }
