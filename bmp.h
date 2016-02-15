@@ -43,11 +43,11 @@ struct BMP
 	// The number of important colours used:
 	uint32_t important_colours;
 
-	// RGBQUAD array:
-	uint16_t** data;
+	// The actual data:
+	struct BMP_RGBQuad** data;
 
-	// Colour-index array:
-	struct BMP_RGBQuad colours[];
+	// Test lol
+	uint8_t buffer[10];
 };
 
 // Opens a given bitmap file and returns a BMP struct:

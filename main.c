@@ -1,4 +1,5 @@
 #include "bmp.h"
+#include "bmp_rgbquad.h"
 #include <stdio.h>
 
 int main()
@@ -8,6 +9,7 @@ int main()
 	{
 		printf("BITMAPFILEHEADER:\n");
 		printf("Size: %d bytes\n", b->size);
+		printf("Pixel offset: %d\n", b->offset);
 
 		printf("\nBITMAPINFOHEADER:\n");
 		printf("Size of header: %d\n", b->infoheader_size);
@@ -25,9 +27,11 @@ int main()
 		{
 			printf("%d:\t", i);
 			for(int j = 0; j < b->width; j++)
-				printf("%x, ", b->data[i][j]);
+				printf("#%x%x%x,", b->data[i][j].r, b->data[i][j].g, b->data[i][j].b);
 			printf("\n");
 		}
+		for(int i = 0; i < 10; i++)
+			printf("%d - %x\n", b->buffer[i], b->buffer[i]);
 		free_bmp(b);
 		return 0;
 	}

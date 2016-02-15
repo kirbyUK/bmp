@@ -1,4 +1,5 @@
 #include "bmp.h"
+#include "bmp_rgbquad.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -57,25 +58,41 @@ struct BMP* open_bmp(const char* filename)
 	fread(&b->num_colours, 4, 1, f);
 	fread(&b->important_colours, 4, 1, f);
 
-	// Read the colour data.
+	// Read the colour data if it exists:
 	//<https://msdn.microsoft.com/en-us/library/windows/desktop/dd183562%28v=vs.85%29.aspx>
-	// Check if the height is positive (bottom-up DIB) or negative (top-down):
-	if(b->height > 0)
+	if(b->num_colours != 0)
 	{
-	}
-	else
-	{
+		/*// Check if the height is positive (bottom-up DIB) or negative (top-down):
+		fseek(f, (b->infoheader_size - 40), SEEK_CUR);
+		if(b->height > 0)
+		{
+		}
+		else
+		{
+		}*/
 	}
 
 	// Allocate the memory for the array of actual pixel data:
-	b->data = malloc(sizeof(uint32_t*) * b->height);
+	b->data = malloc(sizeof(struct BMP_RGBQuad*) * b->height);
 	for(int i = 0; i < b->height; i++)
-		b->data[i] = malloc(sizeof(uint32_t) * b->width);
+		b->data[i] = malloc(sizeof(struct BMP_RGBQuad) * b->width);
 
 	// Read the actual pixel data: 
 	fseek(f, b->offset, SEEK_SET);
-	for(int i = 0; i < b->height; i++)
-		fread(b->data[i], b->bits_per_pixel, b->width, f);
+	// Check to see if the height is positive (bottom-up DIB) or negative (top-down):
+	/*if(b->height > 0)
+	{
+		for(int i = (b->height - 1); i >= 0; i--)
+		{
+			for(int j = (b->width - 1); j >= 0; j -= 3)
+			{
+				fread(&b->data[i][j].r, 1, 1, f);
+				fread(&b->data[i][j].g, 1, 1, f);
+				fread(&b->data[i][j].b, 1, 1, f);
+			}
+		}
+	}*/
+	fread(b->buffer, (b->size - b->offset), 1, f);
 
 	fclose(f);
 	return b;
