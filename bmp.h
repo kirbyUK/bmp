@@ -19,11 +19,14 @@ struct BMP
 	uint32_t offset;
 
 	// BITMAPINFOHEADER:
+	// The size of this header:
+	int32_t infoheader_size;
+
 	// The image dimensions:
 	int32_t width, height;
 
 	// The number of bits per pixel:
-	uint32_t bits_per_pixel;
+	uint16_t bits_per_pixel;
 
 	// The compression used, if any:
 	uint32_t compression;

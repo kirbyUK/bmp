@@ -8,9 +8,10 @@ int main()
 	{
 		printf("BITMAPFILEHEADER:\n");
 		printf("Size: %d bytes\n", b->size);
-		printf("Dimensions: %dpx x %dpx\n", b->width, b->height);
 
 		printf("\nBITMAPINFOHEADER:\n");
+		printf("Size of header: %d\n", b->infoheader_size);
+		printf("Dimensions: %dpx x %dpx\n", b->width, b->height);
 		printf("Bits per pixel: %d\n", b->bits_per_pixel);
 		printf("Compression: %d\n", b->compression);
 		printf("Image size: %d\n", b->img_size);

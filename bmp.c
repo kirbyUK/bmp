@@ -32,8 +32,8 @@ struct BMP* open_bmp(const char* filename)
 	// Get the offset to the image data:
 	fread(&b->offset, 4, 1, f);
 
-	// Skip the size of BITMAPINFOHEADER (always 40):
-	fseek(f, 4, SEEK_CUR);
+	// Read the size of the info header:
+	fread(&b->infoheader_size, 4, 1, f);
 
 	// Read the height and width:
 	fread(&b->width, 4, 1, f);
@@ -56,6 +56,16 @@ struct BMP* open_bmp(const char* filename)
 	// Read the number of colours and important colours:
 	fread(&b->num_colours, 4, 1, f);
 	fread(&b->important_colours, 4, 1, f);
+
+	// Read the colour data.
+	//<https://msdn.microsoft.com/en-us/library/windows/desktop/dd183562%28v=vs.85%29.aspx>
+	// Check if the height is positive (bottom-up DIB) or negative (top-down):
+	if(b->height > 0)
+	{
+	}
+	else
+	{
+	}
 
 	// Allocate the memory for the array of actual pixel data:
 	b->data = malloc(sizeof(uint32_t*) * b->height);
