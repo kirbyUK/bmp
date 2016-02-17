@@ -45,9 +45,6 @@ struct BMP
 
 	// The actual data:
 	struct BMP_RGBQuad** data;
-
-	// Test lol
-	uint8_t buffer[10];
 };
 
 // Opens a given bitmap file and returns a BMP struct:

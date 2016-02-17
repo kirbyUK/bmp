@@ -27,11 +27,10 @@ int main()
 		{
 			printf("%d:\t", i);
 			for(int j = 0; j < b->width; j++)
-				printf("#%x%x%x,", b->data[i][j].r, b->data[i][j].g, b->data[i][j].b);
+				printf("#%02x%02x%02x ", b->data[i][j].r, b->data[i][j].g,
+					b->data[i][j].b);
 			printf("\n");
 		}
-		for(int i = 0; i < 10; i++)
-			printf("%d - %x\n", b->buffer[i], b->buffer[i]);
 		free_bmp(b);
 		return 0;
 	}

@@ -10,7 +10,4 @@ struct BMP_RGBQuad
 	uint8_t reserved;
 };
 
-// Prints the given RGBQuad:
-char* str_rgbquad(struct BMP_RGBQuad q);
-
 #endif

@@ -80,19 +80,18 @@ struct BMP* open_bmp(const char* filename)
 	// Read the actual pixel data: 
 	fseek(f, b->offset, SEEK_SET);
 	// Check to see if the height is positive (bottom-up DIB) or negative (top-down):
-	/*if(b->height > 0)
+	if(b->height > 0)
 	{
 		for(int i = (b->height - 1); i >= 0; i--)
 		{
-			for(int j = (b->width - 1); j >= 0; j -= 3)
+			for(int j = (b->width - 1); j >= 0; j--)
 			{
 				fread(&b->data[i][j].r, 1, 1, f);
 				fread(&b->data[i][j].g, 1, 1, f);
 				fread(&b->data[i][j].b, 1, 1, f);
 			}
 		}
-	}*/
-	fread(b->buffer, (b->size - b->offset), 1, f);
+	}
 
 	fclose(f);
 	return b;
