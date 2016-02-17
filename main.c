@@ -1,9 +1,15 @@
 #include "bmp.h"
 #include <stdio.h>
 
-int main()
+int main(int argc, char* argv[])
 {
-	struct BMP* b = open_bmp("sample/RED2.BMP");
+	if(argc != 2)
+	{
+		fprintf(stderr, "Error: No argument given\n");
+		return 1;
+	}
+
+	struct BMP* b = open_bmp(argv[1]);
 	if(b != NULL)
 	{
 		printf("BITMAPFILEHEADER:\n");
