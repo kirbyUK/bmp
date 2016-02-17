@@ -2,7 +2,8 @@ bmp
 ===
 
 > "This is the low-level bit twiddling that C is notorious for"
-> -- Bruce Eckel, Thinking in C++ Volume 1 (2000)
+
+-- Bruce Eckel, Thinking in C++ Volume 1 (2000)
 
 Basically I needed a project to give me some practice in using C specifically
 for working with binary, and decided arbitarily that the best entry level would

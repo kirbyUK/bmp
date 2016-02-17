@@ -1,5 +1,4 @@
 #include "bmp.h"
-#include "bmp_rgbquad.h"
 #include <stdio.h>
 
 int main()
