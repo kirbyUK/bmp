@@ -3,7 +3,7 @@
 
 int main()
 {
-	struct BMP* b = open_bmp("test.bmp");
+	struct BMP* b = open_bmp("sample/RED2.BMP");
 	if(b != NULL)
 	{
 		printf("BITMAPFILEHEADER:\n");

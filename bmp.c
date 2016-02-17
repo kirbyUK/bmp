@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
+#include <errno.h>
 
 struct BMP* open_bmp(const char* filename)
 {
@@ -12,6 +14,8 @@ struct BMP* open_bmp(const char* filename)
 	if(f == NULL)
 	{
 		free(b);
+		fprintf(stderr, "Error opening file '%s': %s\n", filename,
+			strerror(errno));
 		return NULL;
 	}
 
@@ -21,6 +25,8 @@ struct BMP* open_bmp(const char* filename)
 	{
 		free(b);
 		fclose(f);
+		fprintf(stderr, "Error opening file '%s': File is not a bitmap\n",
+			filename);
 		return NULL;
 	}
 
@@ -99,7 +105,7 @@ struct BMP* open_bmp(const char* filename)
 
 void free_bmp(struct BMP* b)
 {
-	for(int i = 0; i < b->width; i++)
+	for(int i = 0; i < b->height; i++)
 		free(b->data[i]);
 	free(b->data);
 	free(b);
